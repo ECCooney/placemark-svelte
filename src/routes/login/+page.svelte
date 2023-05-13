@@ -1,7 +1,9 @@
-<script>
-    import Header from '$lib/Header.svelte';
-    import LoginForm from '$lib/LoginForm.svelte';
-    import WelcomeNavigator from '$lib/WelcomeNavigator.svelte';
+<script lang="ts">
+    import { goto } from "$app/navigation";
+    import Header from "$lib/Header.svelte";
+    import WelcomeNavigator from "$lib/WelcomeNavigator.svelte";
+    import LoginForm from "./LoginForm.svelte";
+    import { placemarkService } from "../../services/placemark-service";
 </script>
 
 <Header>
@@ -10,7 +12,7 @@
 
 <div class="columns">
     <div class="column has-text-centered">
-        <img alt="homer" src="/logo.png" width="300" />
+        <img alt="logo" src="/logo.png" width="300" />
     </div>
     <div class="column">
         <div class="box">
