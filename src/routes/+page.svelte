@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Header from '$lib/Header.svelte';
     import WelcomeNavigator from '$lib/WelcomeNavigator.svelte';
 </script>
@@ -7,12 +7,7 @@
     <WelcomeNavigator />
 </Header>
 
-<div class="columns is-vcentered content">
-    <div class="column has-text-centered">
-        <img width="300" src="/logo.png" alt="homer" />
-    </div>
-    <div class="column">
-        <h1 class="title">Help Me Run Springfield</h1>
-        <p>Donate what you can now - No Bitcoins accepted!</p>
-    </div>
-</div>
+<section class="hero is-halfheight-with-navbar has-background">
+    <div class=masthead>
+        <img src="/banner.jpg" alt="banner" />
+  </section>

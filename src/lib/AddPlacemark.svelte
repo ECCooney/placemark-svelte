@@ -1,58 +1,64 @@
-<script>
-  // @ts-nocheck
-  
-      import { onMount } from "svelte";
-      import { placemarkService } from "../services/placemark-service";
-  
-      let categoryList = [];
-      let selectedCategory = "";
-  
-      let name = "";
-      let description = "";
-      let latitude = 0;
-      let longitude = 0;
-  
-      let message = "";
-  
-      onMount(async () => {
-          categoryList = await placemarkService.getCategorys();
-      });
-  
-      async function addPlacemark() {
-        if (name && description && latitude && longitude && selectedCategory) {
-          const categoryNames = selectedCategory.split(",");
-            const category = categoryList.find((category) => category.name == categoryNames[0]);
-            const placemark = {
-        name: name,
-        description: description,
-        latitude: latitude,
-        longitude: longitude,
-        category: category._id,
-      };
-            const success = await placemarkService.addPlacemark(placemark);
-            if (!success) {
-                message = "Addition not completed - some error occurred";
-                return;
-            }
-            message = `Thanks! You added ${placemark.name}`;
-        } 
-    }
-  </script>
-  
-  <form on:submit|preventDefault={addPlacemark}>
-    <div class="field">
-      <label class="label" for="name">Name</label> <input bind:value={name} class="input" id="name" name="name" placeholder="name">
-    </div>
-    <div class="field">
-      <label class="label" for="description">Description</label> <input bind:value={description} class="input" id="description" name="description" placeholder="description">
-    </div>
-    <div class="field">
-      <label class="label" for="latitude">Latitude</label> <input bind:value={latitude} class="input" id="latitude" name="latitude" placeholder="latitude">
-    </div>
-    <div class="field">
-      <label class="label" for="longitude">Longitude</label> <input bind:value={longitude} class="input" id="longitude" name="longitude" placeholder="longitude">
-    </div>
-    <div class="field">
+<script lang="ts">
+  import { placemarkService } from "../services/placemark-service";
+  import type { Category } from "../services/placemark-types";
+  import { loggedInUser } from "../stores";
+  import Coordinates from "$lib/Coordinates.svelte";
+
+  export let categoryList: Category[] = [];
+
+  let name = "";
+  let description = "";
+  let lat = 52.160858;
+  let lng = -7.15242;
+  let selectedCategory = "";
+  let areas = ["RoI", "NI"];
+  let selectedArea = "";
+  let message = "Please add a Placemark";
+
+  async function addPlacemark() {
+      if (selectedCategory && name && selectedArea) {
+          const category = categoryList.find((category) => category.name);
+          if (category) {
+              const placemark = {
+                  name: name,
+                  description: description,
+                  area: selectedArea,
+                  category: category,
+                  lat: lat,
+                  lng: lng,
+                  contributor: $loggedInUser,
+                  _id: ""
+              };
+              const success = await placemarkService.addPlacemark(placemark);
+              if (!success) {
+                  message = "Placemark not completed - some error occurred";
+                  return;
+              }
+              message = `Thanks! You added ${placemark.name} to ${category.name}`;
+          }
+      } else {
+          message = "Please select amount, method and category";
+      }
+  }
+</script>
+
+<form on:submit|preventDefault={addPlacemark}>
+  <div class="field">
+      <label class="label" for="name">Enter Place Name</label>
+      <input bind:value={name} class="input" id="name" name="name" type="string" />
+  </div>
+  <div class="field">
+    <label class="label" for="description">Enter Description</label>
+    <input bind:value={description} class="input" id="description" name="description" type="string" />
+</div>
+  <div class="field">
+      <div class="control">
+          {#each areas as area}
+              <input bind:group={selectedArea} class="radio" type="radio" value={area} /> {area}
+          {/each}
+      </div>
+  </div>
+  <div class="field">
       <div class="select">
           <select bind:value={selectedCategory}>
               {#each categoryList as category}
@@ -61,6 +67,7 @@
           </select>
       </div>
   </div>
+  <Coordinates bind:lat bind:lng />
   <div class="field">
       <div class="control">
           <button class="button is-link is-light">Add</button>
