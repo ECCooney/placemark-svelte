@@ -5,6 +5,8 @@
     beforeUpdate(() => {
         placemarkService.checkPageRefresh();
     });
+
+    
 </script>
 
 <div class="container">

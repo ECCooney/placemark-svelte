@@ -25,7 +25,7 @@ export const placemarkService = {
         }
     },
 
-    async logout() {
+    async logout(): Promise<void> {
         loggedInUser.set({
             email: "",
             token: "",
@@ -113,6 +113,6 @@ export const placemarkService = {
 			placemarksByCategory.push(placemarks);
 		}
 		return placemarksByCategory;
-	}
+	},
 
 };

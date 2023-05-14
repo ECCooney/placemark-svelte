@@ -6,9 +6,10 @@
 
 <table class="table is-fullwidth">
 <thead>
-    <th>Placemark Name</th>
-    <th>Placemark Area</th>
-    <th>Placemark Contributor</th>
+    <th>Location</th>
+    <th>Region</th>
+    <th>Production</th>
+    <th>Contributor</th>
 </thead>
 <tbody>
     {#each placemarks as placemark}
@@ -18,6 +19,9 @@
             </td>
             <td>
                 {placemark.area}
+            </td>
+            <td>
+                {placemark.category.name}
             </td>
             <td>
                 {placemark.contributor.email}

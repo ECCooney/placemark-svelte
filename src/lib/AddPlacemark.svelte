@@ -13,42 +13,43 @@
   let selectedCategory = "";
   let areas = ["RoI", "NI"];
   let selectedArea = "";
-  let message = "Please add a Placemark";
+  let message = "Please add a Location";
 
   async function addPlacemark() {
-      if (selectedCategory && name && selectedArea) {
-          const category = categoryList.find((category) => category.name);
-          if (category) {
-              const placemark = {
-                  name: name,
-                  description: description,
-                  area: selectedArea,
-                  category: category,
-                  lat: lat,
-                  lng: lng,
-                  contributor: $loggedInUser,
-                  _id: ""
-              };
-              const success = await placemarkService.addPlacemark(placemark);
-              if (!success) {
-                  message = "Placemark not completed - some error occurred";
-                  return;
-              }
-              message = `Thanks! You added ${placemark.name} to ${category.name}`;
-          }
-      } else {
-          message = "Please select amount, method and category";
-      }
-  }
+    if (selectedCategory && name && selectedArea) {
+        const categoryName = selectedCategory
+        const category = categoryList.find((category) => category.name == categoryName);
+        if (category) {
+            const placemark = {
+                name: name,
+                description: description,
+                area: selectedArea,
+                category: category,
+                lat: lat,
+                lng: lng,
+                contributor: $loggedInUser,
+                _id: ""
+            };
+            const success = await placemarkService.addPlacemark(placemark);
+            if (!success) {
+                message = "Placemark not completed - some error occurred";
+                return;
+            }
+            message = `Thanks! You added ${placemark.name} to ${category.name}`;
+        }
+    } else {
+        message = "Please enter all information required";
+    }
+}
 </script>
 
 <form on:submit|preventDefault={addPlacemark}>
   <div class="field">
-      <label class="label" for="name">Enter Place Name</label>
+      <label class="label" for="name">Enter Location Name</label>
       <input bind:value={name} class="input" id="name" name="name" type="string" />
   </div>
   <div class="field">
-    <label class="label" for="description">Enter Description</label>
+    <label class="label" for="description">Enter a Short Description</label>
     <input bind:value={description} class="input" id="description" name="description" type="string" />
 </div>
   <div class="field">
