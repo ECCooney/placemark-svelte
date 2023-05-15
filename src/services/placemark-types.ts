@@ -14,6 +14,7 @@ export interface LoggedInUser {
 
 export interface Category {
     name: string;
+    img: string;
     _id: string;
 }
 

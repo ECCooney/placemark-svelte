@@ -31,5 +31,9 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"cloudinary": "^1.36.4",
+		"cloudinary-core": "^2.13.0"
+	}
 }

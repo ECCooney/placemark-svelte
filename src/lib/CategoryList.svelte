@@ -6,7 +6,7 @@
 
 <table class="table is-fullwidth">
 <thead>
-    <th>category Name</th>
+    <th>Category Name</th>
 </thead>
 <tbody>
     {#each categorys as category}
@@ -14,7 +14,9 @@
             <td>
                 {category.name}
             </td>
-        </tr>
+            <td>
+                {category.img}
+            </td>
     {/each}
 </tbody>
 </table>

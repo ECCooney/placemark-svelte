@@ -7,15 +7,18 @@
     import AddPlacemark from "../../lib/AddPlacemark.svelte";
     import PlacemarkList from "../../lib/PlacemarkList.svelte";
     import { latestPlacemark } from "../../stores";
+	import CategoryGallery from "$lib/CategoryGallery.svelte";
    
     let categoryList: Category[] = [];
     let placemarks: Placemark[] = [];
+    let categorys: Category[] = [];
 
 
     onMount(async () => {
         placemarkService.checkPageRefresh();
         categoryList = await placemarkService.getCategorys();
         placemarks = await placemarkService.getPlacemarks();
+        categorys = await placemarkService.getCategorys();
     });
 
     latestPlacemark.subscribe(async (placemark) => {
@@ -34,7 +37,17 @@
         <PlacemarkList {placemarks} />
     </div>
     <div class="column box has-text-centered">
-        <h1 class="title is-4">Make a Placemark</h1>
+        <h1 class="title is-4">Add a Placemark</h1>
         <AddPlacemark {categoryList} />
     </div>
+</div>
+<div class="section">
+<div class="column has-text-centered">
+        <h1 class="title is-4">Productions Tracked</h1>
+        <div class = container>
+            <div class="columns is-multiline is-centered">
+                <CategoryGallery {categorys} />
+            </div>      
+</div>
+</div>
 </div>

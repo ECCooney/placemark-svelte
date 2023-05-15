@@ -3,12 +3,14 @@ import type { ChartData } from "./charts";
 import type { Placemark, CategoryPlacemarks } from "./placemark-types";
 import type { MarkerLayer, MarkerSpec } from "./markers";
 
+
+
 export function getMarkerLayer(placemarks: Placemark[]): MarkerLayer {
     const markerSpecs = Array<MarkerSpec>();
     placemarks.forEach((placemark) => {
         markerSpecs.push({
             id: placemark._id,
-            title: `${placemark.category.name}`,
+            title: `${placemark.name}: ${placemark.category.name}`,
             location: new LatLng(placemark.lat, placemark.lng),
             popup: true
         });
@@ -52,7 +54,7 @@ export function generateByArea(placemarkList: Placemark[]): ChartData {
         if (placemark.area == "NI") {
             totalByArea.datasets[0].values[0] += 1;
         } else if (placemark.area == "RoI") {
-            totalByArea.datasets[0].values[0] += 1;
+            totalByArea.datasets[0].values[1] += 1;
         }
     });
 
